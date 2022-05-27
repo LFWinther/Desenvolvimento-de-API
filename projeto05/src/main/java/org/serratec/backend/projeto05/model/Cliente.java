@@ -1,12 +1,19 @@
 package org.serratec.backend.projeto05.model;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -15,41 +22,37 @@ public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="clinete_cd_id")
+	@Column(name="cliente_cd_id")
 	private Integer idCliente;
 	
 	@Column(name="cliente_tx_nome")
+	@NotNull
 	private String nome;
 	
-	@Column(name="cliente_tx_cpf")
+	@Size(max=11)
+	@Column(name="cliente_tx_cpf", unique = true)
 	private String cpf;
 	
 	@Column(name="cliente_tx_telefone")
 	private String numeroTelefone;
 	
-	@Column(name="cliebte_tx_email")
+	@Column(name="cliente_tx_email")
 	private String email;
 	
-	@Column(name="cliebte_dt_nascimento")
+	@Column(name="cliente_dt_nascimento")
 	private Date dataNasc;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Cartao> listaCartao;
 	
 	public Cliente() {}
 
-	public Cliente(Integer idCliente, String nome, String cpf, String numeroTelefone, String email, Date dataNasc) {
-		super();
-		this.idCliente = idCliente;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.numeroTelefone = numeroTelefone;
-		this.email = email;
-		this.dataNasc = dataNasc;
-	}
-
-	public Integer getId() {
+	public Integer getIdCliente() {
 		return idCliente;
 	}
 
-	public void setId(Integer idCliente) {
+	public void setIdCliente(Integer idCliente) {
 		this.idCliente = idCliente;
 	}
 
@@ -85,12 +88,20 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public Date getData() {
+	public Date getDataNasc() {
 		return dataNasc;
 	}
 
-	public void setData(Date dataNasc) {
+	public void setDataNasc(Date dataNasc) {
 		this.dataNasc = dataNasc;
+	}
+
+	public List<Cartao> getListaCartao() {
+		return listaCartao;
+	}
+
+	public void setListaCartao(List<Cartao> listaCartao) {
+		this.listaCartao = listaCartao;
 	}
 	
 	
