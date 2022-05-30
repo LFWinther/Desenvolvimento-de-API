@@ -61,5 +61,4 @@ private Integer id;
 		return serialVersionUID;
 	}
 
-	
 }

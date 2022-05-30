@@ -1,24 +1,26 @@
-package org.serratec.backend.projeto05.clienteService;
+package org.serratec.api.EcommercApi.service;
 
+import java.util.Optional;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.serratec.backend.projeto05.DTO.CartaoDTO;
-import org.serratec.backend.projeto05.exception.CartaoExcpetion;
-import org.serratec.backend.projeto05.exception.EmailException;
+import org.serratec.api.EcommercApi.DTO.PedidoDTO;
+import org.serratec.api.EcommercApi.exception.EmailException;
+import org.serratec.api.EcommercApi.exception.PedidoException;
+import org.serratec.api.EcommercApi.model.Pedido;
+import org.serratec.api.EcommercApi.repository.ClienteRepository;
+import org.serratec.api.EcommercApi.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
 
-@Component
 public class EmailService {
-	
+
 	@Value("${spring.mail.username}")
 	private String userName;
 	
@@ -31,6 +33,11 @@ public class EmailService {
 	@Autowired
 	private JavaMailSender emailSender;
 	
+	@Autowired
+	ClienteRepository clienteRepository;
+	
+	@Autowired
+	PedidoRepository pedidoRepository;
 	
 	private final String emailRemetente = "renan.ribeiro15@hotmail.com";
 	
@@ -63,12 +70,18 @@ public class EmailService {
 		emailSender.send(message);
 	}
 	
-	public void emailTeste(CartaoDTO cartaoDTO) throws EmailException, MessagingException, CartaoExcpetion {
+	public void emailTeste(PedidoDTO pedidoDTO) throws EmailException, MessagingException, PedidoException {
 
         this.emailSender = javaMailSender();
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         
+		Optional<Pedido> pedidoOptional = pedidoRepository.findById(pedidoDTO.getIdCliente());
+		Pedido pedido = new Pedido();
+		if(pedidoOptional.isPresent()) {
+			pedido = pedidoOptional.get();
+		}
+
         try {
             helper.setFrom(userName);
             helper.setTo(emailRemetente);
@@ -78,18 +91,18 @@ public class EmailService {
             StringBuilder sBuilder = new StringBuilder();
             sBuilder.append("<html>\r\n"
                             + "<body>\r\n"
-                            +"<h1>Cartão criado com sucesso</h1>"
-                            +"<div>\r\nSegue os dados do cartão:\r\n"
-                            +"<div>\r\n nome: " + cartaoDTO.getNomeTitular()+" \r\n"
-                            +"<div>\r\n numero: " + cartaoDTO.getNumero() +" \r\n"
-                            +"Att: Equipe do banco Devendo a todos!!</div>"
+                            +"<h1>NOME DA LOJA</h1>"
+                            +"<h2>Compra finalizada com sucesso</h2>"
+                            +"<div>\r\nSegue as informações da compra:\r\n"
+                            +"\r\n PRODUTOS: \n" + pedido.getCliente().getListaProduto()
+                            +"<div>\r\nValor todal: " + pedido.getValorTotal()
+                            +"Att: Equipe do EcommercAPI!!</div>"
                             +"</body>"
                             +"</html>");
             helper.setText(sBuilder.toString(), true);
             emailSender.send(message);
         } catch (Exception e) {
-        	throw new EmailException("Houve erro ao enviar o email " + e.getMessage());
+        	throw new EmailException ("Houve erro ao enviar o email " + e.getMessage());
         }
 	}
-	
 }

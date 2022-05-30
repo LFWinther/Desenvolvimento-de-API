@@ -8,7 +8,7 @@ import javax.mail.MessagingException;
 import org.serratec.backend.projeto05.DTO.CartaoDTO;
 import org.serratec.backend.projeto05.clienteService.CartaoService;
 import org.serratec.backend.projeto05.exception.CartaoExcpetion;
-import org.serratec.backend.projeto05.exception.EmailExecption;
+import org.serratec.backend.projeto05.exception.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class CartaoController {
 	}
 	
 	@PostMapping("/salvar")
-	public ResponseEntity<String> salvar(@RequestBody CartaoDTO cartaoDTO) throws EmailExecption, MessagingException, CartaoExcpetion{
+	public ResponseEntity<String> salvar(@RequestBody CartaoDTO cartaoDTO) throws EmailException, MessagingException, CartaoExcpetion{
 		return ResponseEntity.ok(cartaoService.salvar(cartaoDTO));
 	}
 	
