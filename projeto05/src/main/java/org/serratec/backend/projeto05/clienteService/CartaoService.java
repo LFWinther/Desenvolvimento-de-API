@@ -12,7 +12,7 @@ import javax.mail.MessagingException;
 
 import org.serratec.backend.projeto05.DTO.CartaoDTO;
 import org.serratec.backend.projeto05.exception.CartaoExcpetion;
-import org.serratec.backend.projeto05.exception.EmailExecption;
+import org.serratec.backend.projeto05.exception.EmailException;
 import org.serratec.backend.projeto05.model.Cartao;
 import org.serratec.backend.projeto05.model.Cliente;
 import org.serratec.backend.projeto05.repository.CartaoRepository;
@@ -77,7 +77,7 @@ public class CartaoService {
 		return cartao;
 	}
 	
-	public String salvar(CartaoDTO cartaoDTO) throws EmailExecption, MessagingException, CartaoExcpetion {
+	public String salvar(CartaoDTO cartaoDTO) throws EmailException, MessagingException, CartaoExcpetion {
 		Cartao cartao = new Cartao();
 		toModel(cartao, cartaoDTO);
 		cartaoRepository.save(cartao);

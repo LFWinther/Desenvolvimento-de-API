@@ -1,11 +1,11 @@
-package org.serratec.backend.projeto05.clienteCotroller;
+package org.serratec.api.borracharia.controller;
 
 import javax.mail.MessagingException;
 
-import org.serratec.backend.projeto05.DTO.CartaoDTO;
-import org.serratec.backend.projeto05.clienteService.EmailService;
-import org.serratec.backend.projeto05.exception.CartaoExcpetion;
-import org.serratec.backend.projeto05.exception.EmailException;
+import org.serratec.api.borracharia.DTO.ServicoTDO;
+import org.serratec.api.borracharia.exception.EmailException;
+import org.serratec.api.borracharia.exception.ServicoException;
+import org.serratec.api.borracharia.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +22,8 @@ public class EmailController {
 	EmailService emailService;
 	
 	@GetMapping("/email")
-	public ResponseEntity<Void> enviarEmail(@PathVariable CartaoDTO cartaoDTO) throws MessagingException, EmailException, CartaoExcpetion{
-		emailService.emailTeste(cartaoDTO);
+	public ResponseEntity<Void> enviarEmail(@PathVariable ServicoTDO serviceDTO) throws MessagingException, EmailException, ServicoException{
+		emailService.emailTeste(serviceDTO);
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 }
