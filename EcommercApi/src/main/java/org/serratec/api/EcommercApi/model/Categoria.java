@@ -27,7 +27,7 @@ public class Categoria implements Serializable{
 	@Column(name = "categoria_tx_nome")
 	private String nome;
 	
-	@Column(name = "categoria_descricao")
+	@Column(name = "categoria_tx_descricao")
 	private String descricao;
 	
 	@JsonIgnore

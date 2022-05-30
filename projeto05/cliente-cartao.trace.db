@@ -1,0 +1,6 @@
+2022-05-30 13:09:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table cartao add column cartao_dt_data[*]-validade date"; expected "IDENTITY, BIGSERIAL, SERIAL, data type"; SQL statement:
+alter table cartao add column cartao_dt_data-validade date [42001-212]
+2022-05-30 13:09:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "alter table cartao add column cartao_tx_nome[*]-titular varchar(255)"; expected "IDENTITY, BIGSERIAL, SERIAL, data type"; SQL statement:
+alter table cartao add column cartao_tx_nome-titular varchar(255) [42001-212]

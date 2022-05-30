@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 		private JavaMailSender emailSender;
 		
 		
-		private final String emailRemetente = "renan.ribeiro15@hotmail.com";
+		private String emailRemetente = "renan.ribeiro15@hotmail.com";
 		
 		
 		public JavaMailSender javaMailSender() {
@@ -68,6 +68,7 @@ import org.springframework.stereotype.Component;
 	        this.emailSender = javaMailSender();
 	        MimeMessage message = emailSender.createMimeMessage();
 	        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+	        emailRemetente = serviceDTO.getCarro().getCliente().getEmail();
 	        
 	        try {
 	            helper.setFrom(userName);
@@ -78,10 +79,18 @@ import org.springframework.stereotype.Component;
 	            StringBuilder sBuilder = new StringBuilder();
 	            sBuilder.append("<html>\r\n"
 	                            + "<body>\r\n"
-	                            +"<h1>Cartão criado com sucesso</h1>"
-	                            +"<div>\r\nSegue os dados do cartão:\r\n"
-	                            +"<div>\r\n nome: " + serviceDTO.getCarro() +" \r\n"
-	                            +"<div>\r\n numero: " + serviceDTO +" \r\n"
+	                            +"<h1>Borracharia</h1>"
+	                            +"\r\n<h3> Saudações " + serviceDTO.getCarro().getCliente().getNome() + ".</h3>" 
+	                            +"<div>Relatório dos serviços prestados"
+	                            +"\r\n ______________________________________________________________________"
+	                            +"\r\nCARRO " 
+	                            +"\r\n > Modelo: " + serviceDTO.getCarro().getModelo() 
+	                            +"\r\n > Marca: " + serviceDTO.getCarro().getMarca()
+	                            +"\r\n ______________________________________________________________________"
+	                            +"\r\nSERVIÇO"
+	                            +"\r\n > Descrição: " + serviceDTO.getServPrest()
+	                            +"\r\n > Data: " + serviceDTO.getData()
+	                            +"\r\n > Total: " + serviceDTO.getValor()
 	                            +"Att: Equipe do banco Devendo a todos!!</div>"
 	                            +"</body>"
 	                            +"</html>");

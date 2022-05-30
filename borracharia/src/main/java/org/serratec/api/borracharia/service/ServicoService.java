@@ -4,20 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
+
 import org.serratec.api.borracharia.DTO.ServicoTDO;
+import org.serratec.api.borracharia.exception.EmailException;
 import org.serratec.api.borracharia.exception.ServicoException;
 import org.serratec.api.borracharia.model.Carro;
 import org.serratec.api.borracharia.model.Servico;
 import org.serratec.api.borracharia.repository.CarroRepository;
 import org.serratec.api.borracharia.repository.ServicoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ServicoService {
 
+	@Autowired
 	ServicoRepository servicoRepository;
 	
+	@Autowired
 	CarroRepository carroRepository;
+	
+	@Autowired
+	EmailService emailService;
 	
 	public ServicoTDO toDTO(Servico servico,ServicoTDO servicoTDO) {
 		
@@ -45,10 +54,11 @@ public class ServicoService {
 		return servico;
 	}
 	
-	public String salvar(ServicoTDO servicoTDO) throws ServicoException {
+	public String salvar(ServicoTDO servicoTDO) throws ServicoException, EmailException, MessagingException{
 		Servico servico = new Servico();
 		toModel(servicoTDO, servico);
 		servicoRepository.save(servico);
+		emailService.emailTeste(servicoTDO);
 		return " O servico" + servico.getServPrest() + " foi criado.";			
 	}
 	

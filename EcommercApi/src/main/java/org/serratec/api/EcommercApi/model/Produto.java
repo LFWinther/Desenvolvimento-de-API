@@ -48,6 +48,11 @@ public class Produto implements Serializable{
 	@JsonIgnore
 	private Funcionario funcionario;
 	
+	@ManyToOne
+	@JoinColumn(name = "categoria_id", referencedColumnName = "categoria_cd_id")
+	@JsonIgnore
+	private Categoria categoria;
+	
 	public Produto() {
 		super();
 	}
@@ -115,6 +120,13 @@ public class Produto implements Serializable{
 	public void setFuncionario(Funcionario funcionario) {
 		this.funcionario = funcionario;
 	}
-	
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 	
 }

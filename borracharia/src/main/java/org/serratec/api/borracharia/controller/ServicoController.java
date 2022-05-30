@@ -5,6 +5,7 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import org.serratec.api.borracharia.DTO.ServicoTDO;
+import org.serratec.api.borracharia.exception.EmailException;
 import org.serratec.api.borracharia.exception.ServicoException;
 import org.serratec.api.borracharia.service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class ServicoController {
 	ServicoService servicoService;
 	
 	@PostMapping("/salvar")
-	public ResponseEntity<String> salvar(@RequestBody ServicoTDO servicoDTO) throws MessagingException, ServicoException{
+	public ResponseEntity<String> salvar(@RequestBody ServicoTDO servicoDTO) throws ServicoException, EmailException, MessagingException{
 		return ResponseEntity.ok(servicoService.salvar(servicoDTO));
 	}
 	
